@@ -20,7 +20,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="<?=base_url()?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>           
 
-        <?php if ($user['usertype'] == 'Administrator'): ?>
+        <?php if ($user['user_level'] >= 10): ?>
         <li class="header">ADMIN OPTIONS</li>         
         <li><a href="<?=base_url('users')?>"><i class="fa fa-users"></i> <span>Users</span></a></li>
         <?php endif ?>      
