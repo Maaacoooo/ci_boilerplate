@@ -1,0 +1,35 @@
+///////////////////////////////////////////////
+//
+// CONFIGURATIONS
+//												
+///////////////////////////////////////////////
+
+//////////////////////////////////////////////
+// DATABASE CONFIG
+//////////////////////////////////////////////
+
+	1. Locate the file ./application/config/database.php
+		- HOSTNAME
+		- DB USERNAME
+		- DB PASS
+		- DB NAME
+
+
+//////////////////////////////////////////////
+// URL CONFIGURATION
+/////////////////////////////////////////////
+
+	1. Locate the file ./application/config/config.php
+
+	2. Configure config.php, Locate $config['base_url']. Add HTTP.
+		DEFAULT is 'http://'.$_SERVER['HTTP_HOST'].'/inventory/';
+
+
+	3. Locate and configure file ./.htaccess
+		REPLACE THE LINE :
+			RewriteRule ^(.*)$ /inventory/index.php/$1 [L] 
+
+			// /inventory/ is the folder
+
+
+

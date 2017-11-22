@@ -1,0 +1,44 @@
+		.content {		
+			border-bottom: 1px #cecece solid;
+			padding: 10px;
+		}
+
+		.content-title {
+			font-weight: bold;
+		}
+
+		
+		.signature-container {
+			width: 100%;
+			display: block;
+		}
+
+		.signature {
+			margin-top: 50px;
+			margin-left: 50px;
+			margin-right: 80px;
+			display: inline-block;
+		}
+
+		.signee {
+			display: block;
+			width: 100%;
+			padding: 5px 25% 5px 25%;
+			border-bottom: 1px #212121 solid;
+			text-align: center;
+		}
+
+		.signee-title {
+			text-align: center;
+			width: 100%;
+			padding: 5px 25% 5px 25%;
+			display: block;
+		}
+
+		.print-stamp {
+			width: 100%;
+			display: block;
+			text-align: right;
+		}
+
+		
