@@ -83,7 +83,13 @@ class SessNotif
 						$new_data[$key][] = $value[$i];
 					}
 				} else {
-					$new_data[$key][] = $value;
+					//check if there is a new data passed with a distinct key
+					if(isset($notif[$key])) {
+						$new_data[$key][] = $value; 
+					} else {
+						$new_data[$key] = $value;
+					} 				
+					
 				}
 			}
 			//loop new data 
@@ -103,10 +109,7 @@ class SessNotif
 			}
 
 			//loop new values and rebuild the flashdata
-			foreach ($new_data as $key => $value) {
-				$this->CI->session->set_flashdata($key, $value);
-			}
-
+			$this->CI->session->set_flashdata($new_data);
 
 		} else {
 			//Initialise the very first session
