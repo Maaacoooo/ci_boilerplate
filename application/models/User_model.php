@@ -44,6 +44,7 @@ Class User_model extends CI_Model
               users.email,
               users.contact,
               users.img,
+              users.is_deleted,
               usertypes.user_level,
               usertypes.title as usertype
               ');        
