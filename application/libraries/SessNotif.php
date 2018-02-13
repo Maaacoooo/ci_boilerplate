@@ -112,7 +112,7 @@ class SessNotif
 			$this->CI->session->set_flashdata($new_data);
 
 		} else {
-			//Initialise the very first session
+			//Initialise the very first flashdata
 			foreach ($notif as $key => $value) {
 				$this->CI->session->set_flashdata($key, $value);
 			}

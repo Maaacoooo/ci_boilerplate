@@ -111,4 +111,49 @@ class Dashboard extends CI_Controller {
 	}
 
 
+	public function test()		{
+
+		$userdata = $this->session->userdata('admin_logged_in'); //it's pretty clear it's a userdata
+
+		if($userdata)	{
+
+			$data['title'] = 'Dashboard';
+			$data['site_title'] = APP_NAME;
+			$data['user'] = $this->user_model->userdetails($userdata['username']); //fetches users record
+
+			$nope['success'] = "HAHAHAHAHHAHAHA PUTA EJdklsajdklasjdkljakldj";
+			//$nope['success'] = "HAHAHAHAHHAHAHA PUTA EJdklsajdklasjdkljakldj";
+			$this->sessnotif->setNotif($nope);
+			//$this->sessnotif->setNotif($nope);
+			//$this->sessnotif->setNotif($nope);
+			//$this->sessnotif->setNotif($nope);
+			//$this->sessnotif->setNotif($nope);
+
+			$wow['warning'] = "Lorem ipsum dolor sit amet.";
+			$this->sessnotif->setNotif($wow);
+			//$this->sessnotif->setNotif($wow);
+
+			$peste['error'] = "HAHAHAHHAHAHA";		
+			$this->sessnotif->setNotif($peste);				
+			//$this->sessnotif->setNotif($peste);				
+			$peste2['error'] = "Lorem Perspiciatis neque distinctio tempora eveniet iure, vitae ipsum rem totam accusantium ullam, natus veritatis eius earum?";
+			$this->sessnotif->setNotif($peste2);
+
+			 
+
+			var_dump($this->session->flashdata());
+
+			
+			$this->load->view('blank', $data);					
+
+
+		} else {
+
+			$this->session->set_flashdata('error', 'You need to login!');
+			redirect('dashboard/login', 'refresh');
+		}
+
+	}
+
+
 }
