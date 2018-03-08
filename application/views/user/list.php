@@ -121,7 +121,7 @@
           <div class="box-body">
               <div class="callout callout-info">
                 <h4><i class="fa fa-info-circle"></i> Information</h4>
-                <p>The default password of every new user is <strong class="strong text-success">Inventory2017</strong>(case-sensitive).</p>
+                <p>The default password of every new user is <strong class="strong text-success"><?=DEFAULT_PASS?></strong>(case-sensitive).</p>
                 <p>Please advise your New User to change his password after logging in.</p>
               </div>
 
