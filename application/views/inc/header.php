@@ -21,7 +21,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <?php if (filexist($user['img']) && $user['img']): ?>
-                <img src="<?=base_url($user['img'])?>" class="user-image" alt="User Image">
+                <div class="img-profile img-nav-header" style="background-image: url('<?=base_url($user['img'])?>');"></div>
               <?php else: ?>
                 <img src="<?=base_url('assets/img/user.png')?>" class="user-image" alt="User Image">                
               <?php endif ?>
@@ -31,7 +31,7 @@
               <!-- User image -->
               <li class="user-header">
                 <?php if (filexist($user['img']) && $user['img']): ?>
-                  <img src="<?=base_url($user['img'])?>" class="img-circle" alt="User Image">
+                  <div class="img-profile" style="background-image: url('<?=base_url($user['img'])?>');"></div>
                 <?php else: ?>
                   <img src="<?=base_url('assets/img/no_image.gif')?>" class="img-circle" alt="User Image">                
                 <?php endif ?>

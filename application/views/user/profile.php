@@ -75,7 +75,7 @@
           <div class="box box-primary">
             <div class="box-body box-profile">             
               <?php if (filexist($user['img']) && $user['img']): ?>
-                <img class="profile-user-img img-responsive img-circle" src="<?=base_url($user['img'])?>" alt="User profile picture">
+                <div class="img-profile" style="background-image: url('<?=base_url($user['img'])?>'); margin: auto"></div>   
               <?php else: ?>
                 <img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/img/no_image.gif')?>" alt="User profile picture">                
               <?php endif ?>

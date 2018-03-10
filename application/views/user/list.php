@@ -82,7 +82,7 @@
                   <td>
                     <a href="<?=base_url('users/update/'.$res['username'])?>">
                       <?php if (filexist($res['img']) && $res['img']): ?>
-                        <img class="profile-user-img img-responsive img-circle" src="<?=base_url($res['img'])?>" alt="User profile picture">
+                        <div class="img-profile img-list" style="background-image: url('<?=base_url($res['img'])?>');"></div>
                       <?php else: ?>
                         <img class="profile-user-img img-responsive img-circle" src="<?=base_url('assets/img/no_image.gif')?>" alt="User profile picture">                
                       <?php endif ?>
