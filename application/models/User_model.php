@@ -339,4 +339,17 @@ Class User_model extends CI_Model
 
 
 
+
+    function getActivity($user) {
+      $this->db->select('
+        COUNT(id) as count,
+        DATE(date_time) as date
+        ');
+      $this->db->where('user', $user);
+      $this->db->group_by('DATE(date_time)');
+      return $this->db->get('logs')->result_array();
+    }
+
+
+
 }

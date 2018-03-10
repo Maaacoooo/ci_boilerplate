@@ -297,4 +297,23 @@ class Users extends CI_Controller {
 
 
 
+	public function getActivity($user)		{
+
+		$userdata = $this->session->userdata('admin_logged_in'); //it's pretty clear it's a userdata
+
+		if($userdata)	{
+
+				echo json_encode($this->user_model->getActivity($user));		
+
+
+		} else {
+
+			$this->session->set_flashdata('error', 'You need to login!');
+			redirect('dashboard/login', 'refresh');
+		}
+
+	}
+
+
+
 }

@@ -8,6 +8,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <?php $this->load->view('inc/css')?>
+    <link rel="stylesheet" href="<?=base_url('assets/bower_components/morris.js/morris.css')?>">
    
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -99,6 +100,9 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane <?php if(!($flash_error || $flash_success || $flash_valid))echo'active'?>" id="activity">
+                <?php if ($logs): ?>
+                <div id="graph"></div><!-- /#graph -->
+                <?php endif; ?>
                 <h4 class="title">Last 50 Activity <small><a href="<?=current_url().'/download_logs'?>" class="pull-right"><i class="fa fa-download"></i> Download Logs</a></small></h4>
                 <?php if ($logs): ?>
                 <table class="table table-condensed">
@@ -279,6 +283,45 @@
 <!-- ./wrapper -->
 
     <?php $this->load->view('inc/js')?>    
+    <?php if ($logs): ?>
+    <script src="<?=base_url('assets/bower_components/raphael/raphael.min.js')?>"></script>
+    <script src="<?=base_url('assets/bower_components/morris.js/morris.min.js')?>"></script>
+    <script type="text/javascript">
+      /* data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
+        Morris.Line({
+          element: 'graph',
+          data: getActivity(),
+          xkey: 'date',
+          ykeys: ['count'],
+          labels: ['Count'],
+          resize: true,
+          xLabelAngle: 45
+        });
+
+
+        function getActivity() {
+
+          var return_data = function() {
+              var data = [];
+                $.ajax(
+                      {
+                          async: false,
+                          type: "GET",
+                          url: "<?=base_url('users/getActivity/'.$info['username'])?>",
+                          data: "[]",
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          cache: false, 
+                          success: function (datas) {                                 
+                             data = datas;                                                    
+                          }
+              });
+              return data;                                    
+          }();
+          return return_data;      
+        }
+    </script>
+    <?php endif; ?>
   
 </body>
 </html>
