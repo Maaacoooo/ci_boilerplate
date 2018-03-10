@@ -26,6 +26,11 @@
 	height: 50px !important;
 }
 
+.sidebar-collapse .img-nav {
+	width: 30px !important;
+	height: 30px !important;
+} 
+
 .img-nav-header {
 	width: 30px !important;
 	height: 30px !important;
