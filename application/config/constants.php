@@ -10,7 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 define('APP_NAME', 'ciBoilerplate'); // Application name 
-define('DEFAULT_PASS', 'ciBoilerplate'); //Default Password of Accounts
+define('DEFAULT_PASS', 'boilerplate'); //Default Password
+define('UPLOAD_DIR', 'uploads/'); //Default Upload Directory; add backslash
 
 
 /*

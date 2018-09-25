@@ -74,36 +74,11 @@ Class User_model extends CI_Model
             //Process Image Upload
               if($_FILES['img']['name'] != NULL)  {        
 
-                $path = checkDir('./uploads/users/'.$this->input->post('username').'/'); //the path to upload
-
-                $config['upload_path'] = $path;
-                $config['allowed_types'] = 'gif|jpg|png'; 
-                $config['encrypt_name'] = TRUE;                        
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);         
-                
-                $field_name = "img";
-                $this->upload->do_upload($field_name);
-
-                $upload_data = $this->upload->data();
-
-                $filepath = $path . $upload_data['file_name'];
-
-                // Set Watermark ////////////////////////////////////////////////////
-                $wm_config['quality'] = '100%';
-                $wm_config['wm_text'] = 'Copyright '.APP_NAME.' '.date('Y');
-                $wm_config['wm_type'] = 'text';
-                $wm_config['wm_font_path'] = './system/fonts/arial.ttf';
-                $wm_config['wm_font_size'] = '16';
-                $wm_config['wm_font_color'] = 'ffffff';
-                $wm_config['wm_vrt_alignment'] = 'bottom';
-                $wm_config['wm_hor_alignment'] = 'left';
-                $wm_config['source_image'] = $filepath; 
-                /////////////////////////////////////////////////////////////////////
+                $filename = UploadFile('users/'.$username.'/', 'img');
+                ImgCropper($filename);
 
                 //Update row 
-                $this->db->update('users', array('img' => $filepath), array('username'=>$username));
+                $this->db->update('users', array('img' => $filename), array('username'=>$username));
             
             } 
 
@@ -128,51 +103,24 @@ Class User_model extends CI_Model
      */
     function update_user($user) { 
 
-            $filepath = $this->userdetails($user)['img']; //gets the old data 
+
+            $filename = $this->userdetails($user)['img']; //gets the old data 
 
             //Remove Image
             if($this->input->post('remove_img')) {
-                if(filexist($filepath)) {
-                  unlink($filepath); //removes the file
+                if (RemoveFile($filename)) {
+                  $filename = null;
                 }
-                $filepath = ''; //set to null
             }
 
             //Process Image Upload
-              if($_FILES['img']['name'] != NULL)  { 
-
-                //remove old img
-                if(filexist($filepath)) {
-                  unlink($filepath); //removes the file
-                } 
-
-                $path = checkDir('./uploads/users/'.$user.'/'); //the path to upload
-
-                $config['upload_path'] = $path;
-                $config['allowed_types'] = 'gif|jpg|png'; 
-                $config['encrypt_name'] = TRUE;                        
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);         
-                
-                $field_name = "img";
-                $this->upload->do_upload($field_name);
-
-                $upload_data = $this->upload->data();
-
-                $filepath = $path . $upload_data['file_name']; //overwrite variable
-
-                 // Set Watermark ////////////////////////////////////////////////////
-                $wm_config['quality'] = '100%';
-                $wm_config['wm_text'] = 'Copyright '.APP_NAME.' '.date('Y');
-                $wm_config['wm_type'] = 'text';
-                $wm_config['wm_font_path'] = './system/fonts/arial.ttf';
-                $wm_config['wm_font_size'] = '16';
-                $wm_config['wm_font_color'] = 'ffffff';
-                $wm_config['wm_vrt_alignment'] = 'bottom';
-                $wm_config['wm_hor_alignment'] = 'left';
-                $wm_config['source_image'] = $filepath; 
-                
+            if($_FILES['img']['name'] != NULL)  { 
+                //Remove Existing
+                RemoveFile($filename);
+                //Upload file
+                $filename = UploadFile('users/'.$user.'/', 'img');
+                //Crop Image
+                ImgCropper($filename);
             }
       
             $data = array(           
@@ -180,7 +128,7 @@ Class User_model extends CI_Model
                 'email'     => $this->input->post('email'),  
                 'contact'   => $this->input->post('contact'),  
                 'usertype'  => $this->input->post('usertype'),                                         
-                'img'       => $filepath   
+                'img'       => $filename   
              );
             
             $this->db->where('username', $user);
@@ -216,8 +164,10 @@ Class User_model extends CI_Model
     function fetch_users($limit, $id, $search, $is_deleted = 0) {
 
             if($search) {
+                $this->db->group_start();
                 $this->db->like('name', $search);
                 $this->db->or_like('username', $search);
+                $this->db->group_end();                
             }
 
             $this->db->where('is_deleted', $is_deleted);            
@@ -238,8 +188,10 @@ Class User_model extends CI_Model
      */
     function count_users($search, $is_deleted = 0) {
         if($search) {
+            $this->db->group_start();
             $this->db->like('name', $search);
             $this->db->or_like('username', $search);
+            $this->db->group_end(); 
         }
         $this->db->where('is_deleted', $is_deleted);
         return $this->db->count_all_results("users");
@@ -266,50 +218,19 @@ Class User_model extends CI_Model
 
             //Remove Image
             if($this->input->post('remove_img')) {
-                if(filexist($filename)) {
-                  unlink($filename); //removes the file
+                if (RemoveFile($filename)) {
+                  $filename = null;
                 }
-                $filename = ''; //set to null
             }
 
-
             //Process Image Upload
-              if($_FILES['img']['name'] != NULL)  { 
-
-                //Deletes the old photo
-                if(filexist($filename)) {
-                  unlink($filename); 
-                }
-
-                $path = checkDir('./uploads/users/'.$user.'/'); //the path to upload
-
-                $config['upload_path'] = $path;
-                $config['allowed_types'] = 'gif|jpg|png'; 
-                $config['encrypt_name'] = TRUE;                        
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);         
-                
-                $field_name = "img";
-                $this->upload->do_upload($field_name);
-
-                $upload_data = $this->upload->data();
-
-                $filename = $path . $upload_data['file_name'];
-
-                // Set Watermark ////////////////////////////////////////////////////
-                $wm_config['quality'] = '100%';
-                $wm_config['wm_text'] = 'Copyright '.APP_NAME.' '.date('Y');
-                $wm_config['wm_type'] = 'text';
-                $wm_config['wm_font_path'] = './system/fonts/arial.ttf';
-                $wm_config['wm_font_size'] = '16';
-                $wm_config['wm_font_color'] = 'ffffff';
-                $wm_config['wm_vrt_alignment'] = 'bottom';
-                $wm_config['wm_hor_alignment'] = 'left';
-                $wm_config['source_image'] = $filename; 
-                /////////////////////////////////////////////////////////////////////
-
-                
+            if($_FILES['img']['name'] != NULL)  { 
+                //Remove Existing
+                RemoveFile($filename);
+                //Upload file
+                $filename = UploadFile('users/'.$user.'/', 'img');
+                //Crop Image
+                ImgCropper($filename);
             }
       
             $data = array(           

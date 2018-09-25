@@ -64,5 +64,46 @@ function num_to_char($str) {
 * @return [type]      [description]
 */
 function decimalize($str) {
-        return sprintf("%1\$.2f", $str);
+    return sprintf("%1\$.2f", $str);
+}
+
+
+/**
+* Returns a pretty ID. 
+* @param  int       $str    the String to be prettified
+* @param  int       $digits the number of digits to fulfill; default is 5
+* @return Double           returns 000001 
+*/
+function prettyID($str, $digits = 5) {
+     return str_pad($str,$digits,"0",STR_PAD_LEFT);
+}
+
+
+
+/**
+* Returns the age. This is stupidly coded for some reasons
+* @param  String   $date   a MySQL Date format str
+* @param  String   $range  the range to be calculated
+* @return int              the Age
+*/
+function getAge($age_sql, $range) {
+
+    $str = "#".timespan(mysql_to_unix($age_sql . '00:00:00'), $range, 1);
+
+    sscanf($str,"#%d",$age);
+
+    return $age;
+}
+
+
+/**
+* This cleans a string to simply get the INT id 
+* @param  String   $str    the string starting with # . e.g  "#000143-- John Jones Smith"
+* @return int              the int ID. e.g     "143"
+*/
+function cleanId($str) {
+
+    sscanf($str,"#%d",$id);
+
+    return $id;
 }
