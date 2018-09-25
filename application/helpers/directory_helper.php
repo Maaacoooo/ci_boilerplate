@@ -239,7 +239,7 @@ function bastard_check_img($path) {
  * @param  string $no_img [description]
  * @return [type]         [description]
  */
-function checkImg($src, $no_img = 'assets/custom/img/no_image.gif') {
+function checkImg($src, $no_img = 'assets/img/no_image.gif') {
 
     if (file_exists($src)) {
         return base_url($src);
