@@ -255,7 +255,7 @@
               <div class="modal-body">
                 <p>Are you sure to reset to DEFAULT PASSWORD?</p>
                 <p>You <strong>CANNOT UNDO</strong> this action.</p>
-                <p>The Default Password is <strong class="text-success">Inventory2017</strong></p>
+                <p>The Default Password is <strong class="text-success"><?=DEFAULT_PASS?></strong></p>
                 <input type="hidden" name="id" value="<?=$this->encryption->encrypt($info['username'])?>" />
               </div>
               <div class="modal-footer">
