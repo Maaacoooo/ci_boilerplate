@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 define('APP_NAME', 'ciBoilerplate'); // Application name 
+define('APP_CURRENCY', 'PHP'); // Default Currency 
 define('DEFAULT_PASS', 'boilerplate'); //Default Password
 define('UPLOAD_DIR', 'uploads/'); //Default Upload Directory; add backslash
 
